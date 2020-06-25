@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.0-beta.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -14,6 +14,8 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test",
+    "test:watch": "tsdx test --watch",
+    "test:coverage": "tsdx test --coverage",
     "lint": "tsdx lint",
     "prepare": "tsdx build"
   },
@@ -32,6 +34,8 @@
   "author": "Abhishek Ketkar",
   "module": "dist/kitsu-api.esm.js",
   "devDependencies": {
+    "@types/qs": "^6.9.3",
+    "axios-mock-adapter": "^1.18.1",
     "husky": "^4.2.5",
     "tsdx": "^0.13.2",
     "tslib": "^2.0.0",

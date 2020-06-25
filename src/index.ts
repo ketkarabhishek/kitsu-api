@@ -1,8 +1,24 @@
-import auth from './auth';
+import Auth from './auth';
+import Library from './library';
+import Categories from './categories';
+import Users from './users';
+import Anime from './anime';
+import Mappings from './mappings';
 
-export default function KitsuApi() {
+export default class KitsuApi {
+   
+  auth = new Auth()
 
-  return {
-    auth: auth
-  }
+  library = new Library()
+
+  categories = new Categories()
+
+  users = new Users()
+
+  anime = new Anime()
+
+  mappings = new Mappings()
+
 }
+
+
