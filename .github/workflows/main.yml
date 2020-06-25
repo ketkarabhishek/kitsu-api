@@ -1,5 +1,8 @@
 name: CI
-on: [push]
+on:
+  push:
+    branches:
+      - develop
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,7 +30,7 @@ jobs:
           CI: true
 
       - name: Lint
-        run: yarn lint
+        run: yarn lint --fix
         env:
           CI: true
 

@@ -6,19 +6,15 @@ import Anime from './anime';
 import Mappings from './mappings';
 
 export default class KitsuApi {
-   
-  auth = new Auth()
+  auth = new Auth();
 
-  library = new Library()
+  library = new Library();
 
-  categories = new Categories()
+  categories = new Categories();
 
-  users = new Users()
+  users = new Users();
 
-  anime = new Anime()
+  anime = new Anime();
 
-  mappings = new Mappings()
-
+  mappings = new Mappings();
 }
-
-
