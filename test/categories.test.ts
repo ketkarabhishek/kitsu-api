@@ -5,10 +5,10 @@ describe('Categories', () => {
 
   test('Fetch Categories', async () => {
     const categories = kitsuApi.categories.fetch();
-    await categories.exec();
+    const res = await categories.exec();
     const next = await categories.next();
-    // expect(res.meta.count).toBe(217)
-    expect(next.meta.count).toBe(217);
+    expect(res.meta.count).toBeGreaterThan(0)
+    expect(next.data).toHaveLength(10)
   });
 
   test('Fetch Category by Id', async () => {

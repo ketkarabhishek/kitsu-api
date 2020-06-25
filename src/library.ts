@@ -195,13 +195,10 @@ export default class Library {
       data: JSON.stringify(body),
     };
 
-    console.log(options.data);
-
     try {
       const res = await Axios(options);
       return Promise.resolve(res.data);
     } catch (error) {
-      console.log(error);
       return Promise.reject(error);
     }
   }
