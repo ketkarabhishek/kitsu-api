@@ -1,5 +1,5 @@
 {
-  "name": "kitsu-api",
+  "name": "kitsu-api-wrapper",
   "author": "Abhishek Ketkar",
   "description": "A wrapper for Kitsu API.",
   "module": "dist/kitsu-api.esm.js",

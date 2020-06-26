@@ -2,6 +2,7 @@ name: Publish Package
 on:
   release:
     types: [created]
+
     
 jobs:
   build:
@@ -15,7 +16,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-          registry-url: 'https://registry.npmjs.org'
 
       - name: Use cached node_modules
         uses: actions/cache@v1
@@ -27,15 +27,33 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-        env:
-          CI: true
 
-      - name: Build
-        run: yarn build
-        env:
-          CI: true
+      - name: Test
+        run: yarn test --ci --coverage --maxWorkers=2
 
-      - name: Publish
+
+  publish-npm:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+          registry-url: https://registry.npmjs.org/
+
+      - name: Use cached node_modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: nodeModules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            nodeModules-
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: publish
         run: yarn publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
