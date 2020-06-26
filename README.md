@@ -11,7 +11,7 @@ Visit [Kitsu API Docs](https://kitsu.docs.apiary.io/) for all available resource
 - Categories
 - Mappings
 
-## Included Api Features
+## Features
 - Use `filter` to query data.
 - Use `include` to fetch related resources.
 - Sort data by attributes in ascending or descending order.

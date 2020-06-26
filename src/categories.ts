@@ -20,7 +20,6 @@ class FetchCategory {
         { filter: filters },
         { encode: false }
       );
-      console.log(filterString);
 
       this.url = CATEGORIES_URL + '?' + filterString;
     }
@@ -43,7 +42,6 @@ class FetchCategory {
    * Fetches the next page of results if exists.
    */
   public async next() {
-    console.log(this.nextUrl);
     if (!this.nextUrl) {
       return Promise.resolve(null);
     }

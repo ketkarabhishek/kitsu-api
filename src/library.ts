@@ -60,10 +60,8 @@ class FetchLibrary {
       { filter: filters, sort: sort, include: include },
       { encode: false }
     );
-    console.log(filterString);
 
     const url: string = LIBRARY_URL + '?' + filterString;
-    console.log(url);
     this.url = url;
     if (auth) {
       this.axiosOptions.headers.Authorization = 'Bearer ' + auth.access_token;

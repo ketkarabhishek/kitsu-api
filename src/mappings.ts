@@ -16,8 +16,6 @@ class FetchMappings {
     constructor(filters?: MappingFilters, include?: string) {
         if (filters) {
             const filterString: string = QueryString.stringify({filter: filters, include: include}, {encode: false})
-            console.log(filterString);
-
             this.url = MAPPINGS_URL + '?' + filterString
         }
         
@@ -40,7 +38,6 @@ class FetchMappings {
      * Fetches the next page of results if exists.
      */
     public async next() {
-        console.log(this.nextUrl);
         if(!this.nextUrl){
             return Promise.resolve(null)
         }

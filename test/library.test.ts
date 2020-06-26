@@ -8,13 +8,13 @@ describe('Library Entries', () => {
     expect(res.meta.count).toBeGreaterThanOrEqual(0);
   });
 
-  test('Fetch entries with authenticated request', async () => {
-    const auth = await kitsuApi.auth.login('akai34', 'intex_dv1');
-    const res = await kitsuApi.library
-      .fetch({ userId: '123105' }, '-updatedAt', undefined, auth)
-      .exec();
-    expect(res.meta.count).toBeGreaterThanOrEqual(0);
-  });
+  // test('Fetch entries with authenticated request', async () => {
+  //   const auth = await kitsuApi.auth.login("username", "password")
+  //   const res = await kitsuApi.library
+  //     .fetch({ userId: '123105' }, '-updatedAt', undefined, auth)
+  //     .exec();
+  //   expect(res.meta.count).toBeGreaterThanOrEqual(0);
+  // });
 
   test('Fetch entries next page', async () => {
     const library = kitsuApi.library.fetch({
@@ -47,7 +47,7 @@ describe('Library Entries', () => {
 
   // test("Create Library Entry", async () => {
   //     const kitsuApi  = KitsuApi()
-  //     const auth = await kitsuApi.auth.login("akai34", "intex_dv1")
+  //     const auth = await kitsuApi.auth.login("username", "password")
   //     const create = await kitsuApi.library().create(123105, {
   //         animeId: 41083,
   //         progress: 0,
@@ -60,7 +60,7 @@ describe('Library Entries', () => {
 
   // test("Update Library Entry", async () => {
   //     const kitsuApi  = KitsuApi()
-  //     const auth = await kitsuApi.auth.login("akai34", "intex_dv1")
+  //     const auth = await kitsuApi.auth.login("username", "password")
   //     const update = await kitsuApi.library().update({
   //         libraryEntryId: 55409153,
   //         progress: 0,
@@ -73,7 +73,7 @@ describe('Library Entries', () => {
 
   // test("Delete Library Entry", async () => {
   //     const kitsuApi  = KitsuApi()
-  //     const auth = await kitsuApi.auth.login("akai34", "intex_dv1")
+  //     const auth = await kitsuApi.auth.login("username", "password")
   //     await kitsuApi.library().delete({
   //         libraryEntryId: 55409153,
   //     }, auth)
