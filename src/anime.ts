@@ -10,6 +10,51 @@ interface AnimeFilters {
   year?: string;
 }
 
+interface AnimeAttributes {
+  createdAt: string,
+  updatedAt: string,
+  slug: string | null,
+  synopsis: string,
+  coverImageTopOffset: number,
+  titles: { en?: string, en_jp?: string, ja_jp?: string },
+  canonicalTitle: string
+  abbreviatedTitles: string[],
+  averageRating: string | null,
+  ratingFrequencies: {[key: number]: string},
+  userCount: number
+  favoritesCount: number,
+  startDate: string | null,
+  endDate: string | null,
+  popularityRank: number | null,
+  ratingRank: number | null,
+  ageRating: 'G' | 'PG' | 'R' | 'R18' | null,
+  ageRatingGuide: string | null,
+  subtype: 'ONA' | 'OVA' | 'TV' | 'movie' | 'music' | 'special',
+  status: 'current' | 'finished' | 'tba' | 'unreleased' | 'upcoming',
+  tba: string | null,
+  posterImage: object | null,
+  coverImage: object | null,
+  episodeCount: number | null,
+  episodeLength: number | null,
+  youtubeVideoId: string | null,
+  showType: 'ONA' | 'OVA' | 'TV' | 'movie' | 'music' | 'special',
+  nsfw: boolean
+}
+
+interface AnimeItem {
+  id: string
+  type: 'anime',
+  links: {self: string},
+  attributes: AnimeAttributes,
+  relationships: object,
+}
+
+interface ApiResponse <T> {
+  data: T,
+  meta?: object,
+  links?: object
+}
+
 const ANIME_URL = BASE_URL + '/anime';
 
 class FetchAnime {
@@ -31,7 +76,7 @@ class FetchAnime {
   /**
    * Executes query and fetches the first page of results.
    */
-  public async exec(): Promise<any> {
+  public async exec(): Promise<ApiResponse<AnimeItem[]>> {
     try {
       const res = await Axios.get(this.url);
       this.nextUrl = res.data.links.next || undefined;
@@ -44,9 +89,9 @@ class FetchAnime {
   /**
    * Fetches the next page of results if exists.
    */
-  public async next(): Promise<any> {
+  public async next(): Promise<ApiResponse<AnimeItem[]> | undefined> {
     if (!this.nextUrl) {
-      return Promise.resolve();
+      return Promise.resolve(undefined);
     }
     try {
       const res = await Axios.get(this.nextUrl);
@@ -77,7 +122,7 @@ export default class Anime {
    * Fetches an anime by its id.
    * @param id Id of an anime.
    */
-  async fetchById(id: string | number): Promise<any> {
+  async fetchById(id: string | number): Promise<ApiResponse<AnimeItem>> {
     try {
       const res = await Axios.get(ANIME_URL + '/' + id);
       return Promise.resolve(res.data);

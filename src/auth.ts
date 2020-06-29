@@ -9,11 +9,11 @@ export const CLIENTSECRET: string =
 
 export interface KitsuAuthToken {
   access_token: string;
-  token_type: string;
-  expires_in: string | number;
-  refresh_token: string;
-  scope: string;
-  created_at: string | number;
+  token_type?: string;
+  expires_in?: string | number;
+  refresh_token?: string;
+  scope?: string;
+  created_at?: string | number;
 }
 
 export default class Auth {

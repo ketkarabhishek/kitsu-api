@@ -1,5 +1,4 @@
-import KitsuApi from '../src';
-
+import KitsuApi from '../src'
 describe('Anime', () => {
   const kitsuApi = new KitsuApi();
 
@@ -9,10 +8,10 @@ describe('Anime', () => {
   });
 
   test('Fetch anime', async () => {
-    const anime = kitsuApi.anime.fetch();
+    const anime = kitsuApi.anime.fetch({text: 'uzumaki'});
     const res = await anime.exec();
     const next = await anime.next();
     expect(res.data).toHaveLength(10);
-    expect(next.data).toHaveLength(10);
+    expect(next!.data).toHaveLength(10);
   });
 });
