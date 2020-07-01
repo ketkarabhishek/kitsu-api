@@ -12,6 +12,6 @@ describe('Mappings', () => {
     const next = await mappings.next();
 
     expect(res.data[0].attributes.externalSite).toBe('myanimelist/anime');
-    expect(next.data).toHaveLength(10);
+    expect(next!.data).toHaveLength(10);
   });
 });
