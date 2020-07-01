@@ -33,7 +33,7 @@ describe('Users', () => {
         return [
           200,
           {
-            data: [{ id: '123105' }],
+            data: [{ id: '123105', attributes: {email: 'efwrg'} }],
           },
         ];
       });

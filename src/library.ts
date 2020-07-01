@@ -1,7 +1,7 @@
 import { KitsuAuthToken } from './auth';
 import QueryString from 'qs';
 import Axios, { AxiosRequestConfig } from 'axios';
-import { BASE_URL } from './constants';
+import { BASE_URL, ApiResponse } from './constants';
 
 /**
  * @interface LibraryFilters
@@ -15,6 +15,32 @@ interface LibraryFilters {
   status?: 'current' | 'completed' | 'planned' | 'dropped' | 'on_hold';
   title?: string;
   userId?: string;
+}
+
+interface LibraryAttributes {
+  createdAt: string,
+  updatedAt: string,
+  status: 'current' | 'completed' | 'planned' | 'dropped' | 'on_hold',
+  progress: number,
+  volumesOwned: number,
+  reconsuming: boolean,
+  reconsumeCount: number,
+  notes: string | null,
+  private: boolean,
+  reactionSkipped: 'unskipped' | 'skipped' | 'ignored',
+  progressedAt: string | null,
+  startedAt: string | null,
+  finishedAt: string | null,
+  rating: string | null,
+  ratingTwenty: number | null
+}
+
+interface LibraryItem {
+  id: string
+  type: 'libraryEntries',
+  links: {self: string},
+  attributes: LibraryAttributes,
+  relationships: any,
 }
 
 interface CreateEntryData {
@@ -71,7 +97,7 @@ class FetchLibrary {
   /**
    * Executes query and fetches the first page of results.
    */
-  public async exec() {
+  public async exec(): Promise<ApiResponse<LibraryItem[]>>  {
     this.axiosOptions.url = this.url;
     try {
       const res = await Axios(this.axiosOptions);
@@ -85,9 +111,9 @@ class FetchLibrary {
   /**
    * Fetches the next page of results if exists.
    */
-  public async next() {
+  public async next(): Promise<ApiResponse<LibraryItem[]> | undefined>  {
     if (!this.nextUrl) {
-      return Promise.resolve(null);
+      return Promise.resolve(undefined);
     }
     this.axiosOptions.url = this.nextUrl;
     try {
@@ -123,7 +149,7 @@ export default class Library {
   async fetchById(
     libraryEntryId: number | string,
     auth?: KitsuAuthToken
-  ): Promise<any> {
+  ): Promise<ApiResponse<LibraryItem>> {
     const options: AxiosRequestConfig = {
       url: LIBRARY_URL + '/' + libraryEntryId,
       method: 'GET',

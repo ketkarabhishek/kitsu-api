@@ -1,11 +1,26 @@
 import QueryString from 'qs';
-import { BASE_URL } from './constants';
+import { BASE_URL, ApiResponse } from './constants';
 import Axios from 'axios';
 
 interface MappingFilters{
     externalSite?: 'myanimelist/anime' | 'myanimelist/manga' | 'anilist/anime' | 'anilist/manga' | 'anidb' | 'thetvdb/season' | 'thetvdb/series',
     externalId?: number | string
 }
+
+interface MappingAttributes {
+    createdAt: string | null,
+    updatedAt: string | null,
+    externalSite: string,
+    externalId: string
+  }
+  
+  interface MappingItem {
+    id: string
+    type: 'mappings',
+    links: {self: string},
+    attributes: MappingAttributes,
+    relationships: any,
+  }
 
 const MAPPINGS_URL = BASE_URL + '/mappings'
 
@@ -24,7 +39,7 @@ class FetchMappings {
     /**
      * Executes query and fetches the first page of results.
      */
-    public async exec() {
+    public async exec(): Promise<ApiResponse<MappingItem[]>> {
         try {
             const res = await Axios.get(this.url)
             this.nextUrl = res.data.links.next || undefined
@@ -37,9 +52,9 @@ class FetchMappings {
     /**
      * Fetches the next page of results if exists.
      */
-    public async next() {
+    public async next(): Promise<ApiResponse<MappingItem[]> | undefined> {
         if(!this.nextUrl){
-            return Promise.resolve(null)
+            return Promise.resolve(undefined)
         }
         try {
             const res = await Axios.get(this.nextUrl)
@@ -62,10 +77,10 @@ export default class Mappings {
 
 
     /**
-     * Fetch category by id.
-     * @param id The unique id of a category.
+     * Fetch Mapping by id.
+     * @param id The unique id of a Mapping.
      */
-    async fetchById(id: number | string): Promise<any> {
+    async fetchById(id: number | string): Promise<ApiResponse<MappingItem>> {
         try {
             const res = await Axios.get(MAPPINGS_URL + '/' + id)
             return Promise.resolve(res.data)

@@ -1,4 +1,4 @@
-import { BASE_URL } from './constants';
+import { BASE_URL, ApiResponse } from './constants';
 import Axios from 'axios';
 import QueryString from 'qs';
 
@@ -32,8 +32,8 @@ interface AnimeAttributes {
   subtype: 'ONA' | 'OVA' | 'TV' | 'movie' | 'music' | 'special',
   status: 'current' | 'finished' | 'tba' | 'unreleased' | 'upcoming',
   tba: string | null,
-  posterImage: object | null,
-  coverImage: object | null,
+  posterImage: any | null,
+  coverImage: any | null,
   episodeCount: number | null,
   episodeLength: number | null,
   youtubeVideoId: string | null,
@@ -46,13 +46,7 @@ interface AnimeItem {
   type: 'anime',
   links: {self: string},
   attributes: AnimeAttributes,
-  relationships: object,
-}
-
-interface ApiResponse <T> {
-  data: T,
-  meta?: object,
-  links?: object
+  relationships: any,
 }
 
 const ANIME_URL = BASE_URL + '/anime';

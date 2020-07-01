@@ -25,7 +25,7 @@ describe('Library Entries', () => {
     const res = await library.exec();
     const nextRes = await library.next();
     expect(res.meta.count).toBeGreaterThanOrEqual(0);
-    expect(nextRes.meta.count).toBeGreaterThanOrEqual(0);
+    expect(nextRes!.meta.count).toBeGreaterThanOrEqual(0);
   });
 
   test('Fetch entries with no next page', async () => {
@@ -37,7 +37,7 @@ describe('Library Entries', () => {
     const res = await library.exec();
     const nextRes = await library.next();
     expect(res.meta.count).toBeGreaterThanOrEqual(0);
-    expect(nextRes).toBeNull();
+    expect(nextRes).toBeUndefined();
   });
 
   test('Fetch by Id', async () => {
