@@ -8,7 +8,7 @@ describe('Categories', () => {
     const res = await categories.exec();
     const next = await categories.next();
     expect(res.meta.count).toBeGreaterThan(0)
-    expect(next.data).toHaveLength(10)
+    expect(next!.data).toHaveLength(10)
   });
 
   test('Fetch Category by Id', async () => {

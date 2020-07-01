@@ -3,7 +3,7 @@
   "author": "Abhishek Ketkar",
   "description": "A wrapper for Kitsu API.",
   "module": "dist/kitsu-api.esm.js",
-  "version": "0.1.0-beta.0",
+  "version": "0.1.0-beta.1",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

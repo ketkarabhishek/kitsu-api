@@ -15,6 +15,9 @@ interface AnimeAttributes {
   updatedAt: string,
   slug: string | null,
   synopsis: string,
+  /**
+   * @deprecated
+   */
   coverImageTopOffset: number,
   titles: { en?: string, en_jp?: string, ja_jp?: string },
   canonicalTitle: string

@@ -3,6 +3,7 @@ import QueryString from 'qs';
 import Axios, { AxiosRequestConfig } from 'axios';
 import { KitsuAuthToken } from './auth';
 
+
 interface UserAttributes {
   createdAt: string,
   updatedAt: string,
@@ -15,7 +16,7 @@ interface UserAttributes {
   followersCount: number,
   followingCount: number,
   /**
-   * Depreciated
+   * @deprecated
    */
   lifeSpentOnAnime: number,
   birthday: string | null,
@@ -32,12 +33,76 @@ interface UserAttributes {
   title: string | null,
   profileCompleted: boolean,
   feedCompleted: boolean,
+  /**
+   * @deprecated
+   */
   website: string | null,
   proTier: string | null,
   avatar: any,
   coverImage: any,
   status: string,
-  subscribedToNewsletter: boolean
+  subscribedToNewsletter: boolean,
+
+  /**
+   * Logged in users only.
+   */
+   email?: string | null,
+  /**
+  * Logged in users only.
+    */
+   password?: string | null,
+  /**
+   * Logged in users only.
+   */
+   confirmed?: boolean,
+  /**
+   * Logged in users only.
+   */
+   previousEmail?: string | null,
+  /**
+   * Logged in users only.
+   */
+   language?: string | null,
+  /**
+   * Logged in users only.
+   */
+   timeZone?: string | null,
+  /**
+   * Logged in users only.
+   */
+   country?: string | null,
+  /**
+   * Logged in users only.
+   */
+   shareToGlobal?: boolean,
+  /**
+   * Logged in users only.
+   */
+   titleLanguagePreference?: 'canonical' | 'romanized' | 'english',
+  /**
+   * Logged in users only.
+   */
+   sfwFilter?: boolean,
+  /**
+   * Logged in users only.
+   */
+   ratingSystem?: 'advanced' | 'simple' | 'regular',
+  /**
+   * Logged in users only.
+   */
+   theme?: 'dark' | 'light',
+  /**
+   * Logged in users only.
+   */
+   facebookId?: string | null,
+  /**
+   * Logged in users only.
+   */
+   hasPassword?: boolean,
+  /**
+   * Logged in users only.
+   */
+   aoPro?: string | null
 }
 
 interface UserItem {

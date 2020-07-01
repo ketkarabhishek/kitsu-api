@@ -31,6 +31,9 @@ interface LibraryAttributes {
   progressedAt: string | null,
   startedAt: string | null,
   finishedAt: string | null,
+  /**
+   * @deprecated
+   */
   rating: string | null,
   ratingTwenty: number | null
 }
