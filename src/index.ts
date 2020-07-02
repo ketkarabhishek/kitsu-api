@@ -4,6 +4,7 @@ import Categories from './categories';
 import Users from './users';
 import Anime from './anime';
 import Mappings from './mappings';
+import Manga from './manga';
 
 export default class KitsuApi {
   auth = new Auth();
@@ -17,4 +18,6 @@ export default class KitsuApi {
   anime = new Anime();
 
   mappings = new Mappings();
+
+  manga = new Manga();
 }
