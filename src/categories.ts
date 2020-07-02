@@ -34,15 +34,19 @@ class FetchCategory {
   private url: string = CATEGORIES_URL;
   private nextUrl?: string;
 
-  constructor(filters?: CategoryFilters) {
-    if (filters) {
-      const filterString: string = QueryString.stringify(
-        { filter: filters },
-        { encode: false }
-      );
+  constructor(options?: {
+    filter?: CategoryFilters,
+    sort?: string,
+    include?: string,
+    page?: {limit?: number, offset?: number}
+  }) {
+    
+    const filterString: string = QueryString.stringify(
+      options,
+      { encode: false }
+    );
 
-      this.url = CATEGORIES_URL + '?' + filterString;
-    }
+    this.url = CATEGORIES_URL + '?' + filterString;
   }
 
   /**
@@ -80,8 +84,13 @@ export default class Categories {
    * Search categories.
    * @param filters
    */
-  fetch(filters?: CategoryFilters): FetchCategory {
-    return new FetchCategory(filters);
+  fetch(options?: {
+    filter?: CategoryFilters,
+    sort?: string,
+    include?: string,
+    page?: {limit?: number, offset?: number}
+  }): FetchCategory {
+    return new FetchCategory(options);
   }
 
   /**

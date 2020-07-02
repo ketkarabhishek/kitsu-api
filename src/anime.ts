@@ -59,12 +59,15 @@ class FetchAnime {
   private nextUrl?: string;
 
   constructor(
-    filters?: AnimeFilters,
-    sort?: string,
-    include?: 'categories' | 'mappings'
+    options?: {
+      filter?: AnimeFilters,
+      sort?: string,
+      include?: 'categories' | 'mappings',
+      page?: {limit?: number, offset?: number}
+    } 
   ) {
     const queryString = QueryString.stringify(
-      { filters: filters, sort: sort, include: include },
+      options,
       { encode: false }
     );
     this.url = ANIME_URL + '?' + queryString;
@@ -105,14 +108,18 @@ export default class Anime {
    * Search Anime
    * @param filters Filter query results.
    * @param sort Sort by attributes (Prepend '-' to attribute for descending).
-   * @param include Include related resources
+   * @param include Include related resources.
+   * @param page Pagination parameters.
    */
   fetch(
-    filters?: AnimeFilters,
-    sort?: string,
-    include?: 'categories' | 'mappings'
+    options?: {
+      filter?: AnimeFilters,
+      sort?: string,
+      include?: 'categories' | 'mappings',
+      page?: {limit?: number, offset?: number}
+    } 
   ): FetchAnime {
-    return new FetchAnime(filters, sort, include);
+    return new FetchAnime(options);
   }
 
   /**

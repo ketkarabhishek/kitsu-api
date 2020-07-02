@@ -4,7 +4,8 @@ describe('Library Entries', () => {
   const kitsuApi = new KitsuApi();
 
   test('Fetch entries', async () => {
-    const res = await kitsuApi.library.fetch({ userId: '123105' }).exec();
+    const res = await kitsuApi.library.fetch({filter: { userId: '123105' }, page: {limit: 5}}).exec();
+    expect(res.data).toHaveLength(5)
     expect(res.meta.count).toBeGreaterThanOrEqual(0);
   });
 
@@ -17,11 +18,11 @@ describe('Library Entries', () => {
   // });
 
   test('Fetch entries next page', async () => {
-    const library = kitsuApi.library.fetch({
+    const library = kitsuApi.library.fetch({filter: {
       userId: '123105',
       kind: 'anime',
       status: 'current',
-    });
+    }});
     const res = await library.exec();
     const nextRes = await library.next();
     expect(res.meta.count).toBeGreaterThanOrEqual(0);
@@ -29,11 +30,11 @@ describe('Library Entries', () => {
   });
 
   test('Fetch entries with no next page', async () => {
-    const library = kitsuApi.library.fetch({
+    const library = kitsuApi.library.fetch({filter: {
       userId: '123105',
       kind: 'anime',
       status: 'on_hold',
-    });
+    }});
     const res = await library.exec();
     const nextRes = await library.next();
     expect(res.meta.count).toBeGreaterThanOrEqual(0);

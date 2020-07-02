@@ -14,13 +14,13 @@ interface MappingAttributes {
     externalId: string
   }
   
-  interface MappingItem {
+interface MappingItem {
     id: string
     type: 'mappings',
     links: {self: string},
     attributes: MappingAttributes,
     relationships: any,
-  }
+}
 
 const MAPPINGS_URL = BASE_URL + '/mappings'
 
@@ -28,11 +28,14 @@ class FetchMappings {
     private url: string = MAPPINGS_URL
     private nextUrl?: string
 
-    constructor(filters?: MappingFilters, include?: string) {
-        if (filters) {
-            const filterString: string = QueryString.stringify({filter: filters, include: include}, {encode: false})
-            this.url = MAPPINGS_URL + '?' + filterString
-        }
+    constructor(options?: {
+        filter?: MappingFilters, 
+        sort?: string,
+        include?: string,
+        page?: {limit?: number, offset?: number}
+    }) {
+        const filterString: string = QueryString.stringify(options, {encode: false})
+        this.url = MAPPINGS_URL + '?' + filterString
         
     }
 
@@ -71,8 +74,13 @@ export default class Mappings {
      * Search mappings.
      * @param filters 
      */
-    fetch(filters?: MappingFilters, include?: string): FetchMappings{
-        return new FetchMappings(filters, include)
+    fetch(options?: {
+        filter?: MappingFilters, 
+        sort?: string,
+        include?: string,
+        page?: {limit?: number, offset?: number}
+    }): FetchMappings{
+        return new FetchMappings(options)
     }
 
 

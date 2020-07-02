@@ -80,13 +80,16 @@ class FetchLibrary {
   };
 
   constructor(
-    filters?: LibraryFilters,
-    sort?: string,
-    include?: string,
+    options?: {
+      filter?: LibraryFilters,
+      sort?: string,
+      include?: string,
+      page?: {limit?: number, offset?: number}
+    },
     auth?: KitsuAuthToken
   ) {
     const filterString: string = QueryString.stringify(
-      { filter: filters, sort: sort, include: include },
+      options,
       { encode: false }
     );
 
@@ -135,14 +138,18 @@ export default class Library {
    * @param filters Filter query results.
    * @param sort Sort by attributes (Prepend '-' to attribute for descending).
    * @param include Include related resources.
+   * @param page Pagination parameters.
    */
   fetch(
-    filters?: LibraryFilters,
-    sort?: string,
-    include?: string,
+    options?: {
+      filter?: LibraryFilters,
+      sort?: string,
+      include?: string,
+      page?: {limit?: number, offset?: number}
+    },
     auth?: KitsuAuthToken
   ): FetchLibrary {
-    return new FetchLibrary(filters, sort, include, auth);
+    return new FetchLibrary(options, auth);
   }
 
   /**
