@@ -8,9 +8,9 @@ describe('Manga', () => {
   });
 
   test('Fetch manga', async () => {
-    const anime = kitsuApi.manga.fetch({filter: {text: 'naruto'}, page: {limit: 5}});
-    const res = await anime.exec();
-    const next = await anime.next();
+    const manga = kitsuApi.manga.fetch({filter: {text: 'naruto'}, page: {limit: 5}});
+    const res = await manga.exec();
+    const next = await manga.next();
     expect(res.data).toHaveLength(5);
     expect(next!.data).toHaveLength(5);
   });
