@@ -18,7 +18,8 @@ Visit [Kitsu API Docs](https://kitsu.docs.apiary.io/) for all available resource
 ## Available Api Endpoints
 - Auth
 - Anime
-- Library entries
+- Manga
+- Library
 - Users
 - Categories
 - Mappings
@@ -27,7 +28,91 @@ Visit [Kitsu API Docs](https://kitsu.docs.apiary.io/) for all available resource
 - Use `filter` to query data.
 - Use `include` to fetch related resources.
 - Sort data by attributes in ascending or descending order.
-- Pagination.
+- Pagination limit and offset.
+
+## Getting Started
+    // ES Modules
+    import KitsuApi from 'kitsu-api-wrapper'
+
+    // CommonJS
+    const KitsuApi = require('kitsu-api-wrapper').default
+
+## Examples
+
+### Auth
+    const kitsuApi = new KitsuApi();
+    const authToken = await kitsuApi.auth.login('username', 'password');
+
+### Fetch Resources
+    const kitsuApi = new KitsuApi();
+
+    // Anime
+    const animeQuery = kitsuApi.anime.fetch({filter: {text: 'naruto'}, page: {limit: 5}, include: 'categories', sort: '-updatedAt'});
+
+    // Execute query and get first page of results.
+    const res = await animeQuery.exec();
+
+    // Get next page
+    const nextPage2 = await animeQuery.next();
+    const nextPage3 = await animeQuery.next();
+
+    // Anime by id
+    const res = await kitsuApi.anime.fetchById(1);
+
+> `next()` will return `undefined` after it reaches the last page.
+
+Fetching other resources is similar to the above example.
+
+For example replace `kitsu.anime` with `kitsu.manga` for manga.
+
+### Library (Create, Update and Delete)
+These requests require authentication token. 
+
+    const kitsuApi = new KitsuApi();
+
+    // Create
+    const create = await kitsuApi.library.create(userId, {
+        animeId: 1,
+        status: 'current',
+        progress: 5,
+        ratingTwenty: 12
+    }, auth)
+
+    // Update
+    const update = await kitsuApi.library.update({
+        libraryEntryId: 4357345,
+        progress: 8,
+        ratingTwenty: 12,
+        status: 'on_hold'
+    }, auth)
+
+    // Delete
+    await kitsuApi.library.delete({
+        libraryEntryId: 4357345,
+    }, auth)
+
+> `auth` is the object returned from the `login` function or an object containing property `access_token` with a valid token.
+
+### Users
+
+    const kitsuApi = new KitsuApi();
+
+    // Fetch users by Id
+    const user = await kitsuApi.users.fetchById(344647);
+
+    // Fetch users by Slug
+    const user = await kitsuApi.users.fetchBySlug('akai34');
+
+    // Fetch current logged in user (Fetch self)
+    const user = await kitsuApi.users.fetchSelf(auth);
+
+    // Search User
+    const userQuery = kitsuApi.users.fetch('myuser');
+
+    const users = await userQuery.exec(); // First page.
+
+    const nextUsers = await userQuey.next() // Next page
+
 
 
 ---
