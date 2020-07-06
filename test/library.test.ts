@@ -60,9 +60,8 @@ describe('Library Entries', () => {
   // })
 
   // test("Update Library Entry", async () => {
-  //     const kitsuApi  = KitsuApi()
   //     const auth = await kitsuApi.auth.login("username", "password")
-  //     const update = await kitsuApi.library().update({
+  //     const update = await kitsuApi.library.update({
   //         libraryEntryId: 55409153,
   //         progress: 0,
   //         ratingTwenty: null,
