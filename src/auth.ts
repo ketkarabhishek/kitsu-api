@@ -67,10 +67,8 @@ export default class Auth {
 
     try {
       const res = await axios(options);
-      console.log(res.data)
       return Promise.resolve(res.data);
     } catch (error) {
-      console.log(error.response.data)
       return Promise.reject(error);
     }
   }
