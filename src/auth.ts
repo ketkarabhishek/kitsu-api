@@ -11,12 +11,20 @@ export interface KitsuAuthToken {
   access_token: string;
   token_type?: string;
   expires_in?: string | number;
-  refresh_token?: string;
+  refresh_token: string;
   scope?: string;
   created_at?: string | number;
 }
 
 export default class Auth {
+  private axiosOptions: AxiosRequestConfig = {
+    url: TOKEN_URL,
+    method: 'post',
+    headers: {
+      Accept: 'application/vnd.api+json',
+      'Content-Type': 'application/vnd.api+json',
+    }
+  };
   /**
    * Get Kitsu Authentication token.
    * @param username Kitsu Username
@@ -24,12 +32,7 @@ export default class Auth {
    */
   async login(username: string, password: string): Promise<KitsuAuthToken> {
     const options: AxiosRequestConfig = {
-      url: TOKEN_URL,
-      method: 'post',
-      headers: {
-        Accept: 'application/vnd.api+json',
-        'Content-Type': 'application/vnd.api+json',
-      },
+      ...this.axiosOptions,
       data: JSON.stringify({
         grant_type: 'password',
         client_id: CLIENTID,
@@ -43,6 +46,31 @@ export default class Auth {
       const res = await axios(options);
       return Promise.resolve(res.data);
     } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+   * 
+   * @param refresh_token Your refresh token.
+   */
+  async refreshAccessToken(refresh_token: string): Promise<KitsuAuthToken> {
+    const options: AxiosRequestConfig = {
+      ...this.axiosOptions,
+      data: {
+        grant_type: 'refresh_token',
+        refresh_token: refresh_token,
+        client_id: CLIENTID,
+        client_secret: CLIENTSECRET,
+      }
+    }
+
+    try {
+      const res = await axios(options);
+      console.log(res.data)
+      return Promise.resolve(res.data);
+    } catch (error) {
+      console.log(error.response.data)
       return Promise.reject(error);
     }
   }

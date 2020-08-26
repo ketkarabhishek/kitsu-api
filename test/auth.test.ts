@@ -5,7 +5,7 @@ import Axios from 'axios';
 
 describe('Kitsu Auth', () => {
   const mock = new MockAdapter(Axios);
-  const kitsuApi = new KitsuApi();
+  const kitsuauth = new KitsuApi().auth;
   mock.onPost('https://kitsu.io/api/oauth/token').reply(config => {
     expect(JSON.parse(config.data)).toEqual({
       grant_type: 'password',
@@ -26,9 +26,20 @@ describe('Kitsu Auth', () => {
       },
     ];
   });
-  it('Login', async () => {
-    const auth = await kitsuApi.auth.login('username', 'password');
+  test('Login', async () => {
+    const auth = await kitsuauth.login('username', 'password');
     expect(auth).toHaveProperty('access_token');
     expect(auth).toHaveProperty('refresh_token');
   });
+
+  // test('should refresh access token', async () => {
+  //   const auth  = await kitsuauth.login('username', 'password');
+  //   expect(auth).toHaveProperty('access_token');
+  //   expect(auth).toHaveProperty('refresh_token');
+
+  //   const rauth = await kitsuauth.refreshAccessToken(auth.refresh_token)
+  //   expect(rauth).toHaveProperty('access_token');
+  //   expect(rauth).toHaveProperty('refresh_token');
+  // })
+  
 });

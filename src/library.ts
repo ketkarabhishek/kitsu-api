@@ -64,6 +64,8 @@ interface DeleteEntryData {
   libraryEntryId: number | string;
 }
 
+
+
 const LIBRARY_URL: string = BASE_URL + '/library-entries';
 
 class FetchLibrary {
@@ -95,6 +97,7 @@ class FetchLibrary {
 
     const url: string = LIBRARY_URL + '?' + filterString;
     this.url = url;
+    this.nextUrl = url;
     if (auth) {
       this.axiosOptions.headers.Authorization = 'Bearer ' + auth.access_token;
     }
@@ -103,6 +106,16 @@ class FetchLibrary {
   /**
    * Executes query and fetches the first page of results.
    */
+  // public async exec(): Promise<ApiResponse<LibraryItem[]>>  {
+  //   this.axiosOptions.url = this.url;
+  //   try {
+  //     const res = await Axios(this.axiosOptions);
+  //     this.nextUrl = res.data.links.next || undefined;
+  //     return Promise.resolve(res.data);
+  //   } catch (error) {
+  //     return Promise.reject(error);
+  //   }
+  // }
   public async exec(): Promise<ApiResponse<LibraryItem[]>>  {
     this.axiosOptions.url = this.url;
     try {
